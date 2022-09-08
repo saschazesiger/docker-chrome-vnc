@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:stable-slim
 
 LABEL org.opencontainers.image.authors="janis@js0.ch"
 LABEL org.opencontainers.image.source="https://js0.ch"
