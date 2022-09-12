@@ -27,6 +27,6 @@ screen -d -m env HOME=/etc /usr/bin/fluxbox
 sleep 2
 
 echo "---Starting Chrome---"
-rm -rf ~/.config/chromium/Default/Extensions/*
+mkdir ${DATA_DIR}/chrome
 cd ${DATA_DIR}
-/usr/bin/chromium --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --window-size=${CUSTOM_RES_W},${CUSTOM_RES_H} --no-sandbox --test-type --dbus-stub ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
+/usr/bin/chromium --user-data-dir=${DATA_DIR}/chrome --disable-accelerated-video --disable-gpu --window-size=${CUSTOM_RES_W},${CUSTOM_RES_H} --no-sandbox --test-type --dbus-stub ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
