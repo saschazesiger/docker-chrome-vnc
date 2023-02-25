@@ -70,5 +70,5 @@ ADD /scripts/ /opt/scripts/
 COPY /conf/ /etc/.fluxbox/
 RUN chmod -R 770 /opt/scripts/
 
-#Server Start
+#Server Start 1
 ENTRYPOINT ["/opt/scripts/start.sh"]
