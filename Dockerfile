@@ -49,8 +49,9 @@ RUN export TZ=Europe/Rome && \
 	locale-gen && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb /tmp
-RUN dpkg -i /tmp/google-chrome-stable_current_amd64.deb
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
+RUN dpkg -i /tmp/chrome.deb || apt-get install -yf
+RUN rm /tmp/chrome.deb
 
 ENV DATA_DIR=/chrome
 ENV CUSTOM_RES_W=1024
