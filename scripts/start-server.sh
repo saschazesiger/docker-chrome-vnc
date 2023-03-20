@@ -29,4 +29,4 @@ sleep 2
 echo "---Starting Chrome---"
 mkdir ${DATA_DIR}
 cd ${DATA_DIR}
-/usr/bin/chromium ${URL} --auto-hide-toolbar --bwsi  --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --no-sandbox --disable-features=ShowSyncUINavigationButton --test-type --dbus-stub ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
+/usr/bin/google-chrome ${URL} --auto-hide-toolbar --bwsi  --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --no-sandbox --disable-features=ShowSyncUINavigationButton --test-type --dbus-stub ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
