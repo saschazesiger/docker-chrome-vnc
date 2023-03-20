@@ -51,7 +51,7 @@ RUN export TZ=Europe/Rome && \
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
 RUN dpkg -i /tmp/chrome.deb || apt-get install -yf
-RUN apt -f install -y
+RUN sudo apt-get -o Debug::pkgProblemResolver=true install -f
 RUN rm /tmp/chrome.deb
 
 ENV DATA_DIR=/chrome
