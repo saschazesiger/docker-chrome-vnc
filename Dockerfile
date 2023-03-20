@@ -41,7 +41,7 @@ RUN chmod 751 /usr/bin/x11vnc
 
 RUN export TZ=Europe/Rome && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 && \
+	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 fonts-liberation libasound2 ibcurl3-gnutls libcurl3-nss libcurl4 libcurl3 libgbm1 libnspr4 libnss3 libu2f-udev xdg-utils && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
 	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
