@@ -42,15 +42,15 @@ RUN chmod 751 /usr/bin/x11vnc
 RUN export TZ=Europe/Rome && \
 	apt-get update && \
 	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 && \
-	cd /tmp && \
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-	dpkg -i google-chrome-stable_current_amd64.deb && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
 	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
 	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
 	locale-gen && \
 	rm -rf /var/lib/apt/lists/*
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb
 
 ENV DATA_DIR=/chrome
 ENV CUSTOM_RES_W=1024
