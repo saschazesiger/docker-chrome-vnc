@@ -41,7 +41,7 @@ RUN chmod 751 /usr/bin/x11vnc
 
 RUN export TZ=Europe/Rome && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 fonts-liberation libasound2 ibcurl3-gnutls libcurl3-nss libcurl4 libcurl3 libgbm1 libnspr4 libnss3 libu2f-udev xdg-utils && \
+	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
 	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
@@ -51,6 +51,7 @@ RUN export TZ=Europe/Rome && \
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
 RUN dpkg -i /tmp/chrome.deb || apt-get install -yf
+RUN apt -f install -y
 RUN rm /tmp/chrome.deb
 
 ENV DATA_DIR=/chrome
