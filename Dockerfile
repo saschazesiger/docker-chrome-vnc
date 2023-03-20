@@ -42,6 +42,7 @@ RUN chmod 751 /usr/bin/x11vnc
 RUN export TZ=Europe/Rome && \
 	apt-get update && \
 	apt-get -y install --no-install-recommends fonts-takao fonts-arphic-uming libgtk-3-0 && \
+	cd /tmp && \
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
 	dpkg -i google-chrome-stable_current_amd64.deb && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
