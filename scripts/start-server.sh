@@ -30,4 +30,4 @@ echo "---Starting Chrome---"
 mkdir ${DATA_DIR}
 cd ${DATA_DIR}
 ls
-/usr/bin/google-chrome ${URL}  --user-data-dir=${DATA_DIR}  ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
+/usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=${DATA_DIR}  ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
