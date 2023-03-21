@@ -66,7 +66,7 @@ ENV UID=99
 ENV GID=100 
 ENV DATA_PERM=770
 ENV USER="chrome"
-ENV URL=""
+ENV URL="https://www.google.com"
 
 RUN mkdir $DATA_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
