@@ -1,4 +1,4 @@
-# Chrome in Docker optimized for Unraid
+# Chrome in Docker
 Chromium is an open-source browser project that aims to build a safer, faster, and more stable way for all users to experience the web.
 
 RESOLUTION: You can also change the resolution from the WebGUI, to do that simply click on 'Show more settings...' (on a resolution change it can occour that the screen is not filled entirely with the Chrome window, simply restart the container and it will be fullscreen again).
@@ -24,8 +24,7 @@ docker run --name Chrome -d \
 	--env 'GID=100' \
 	--env 'UMASK=000' \
 	--env 'DATA_PERM=770' \
-	--volume /mnt/cache/appdata/chrome:/chrome \
-	ich777/chrome
+	customimage
 ```
 ### Webgui address: http://[SERVERIP]:[PORT]/vnc.html?autoconnect=true
 
