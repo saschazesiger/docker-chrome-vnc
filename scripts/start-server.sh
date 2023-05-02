@@ -3,9 +3,21 @@ export DISPLAY=:99
 export XAUTHORITY=${DATA_DIR}/.Xauthority
 
 echo "---Resolution check---"
-CUSTOM_RES_W=1024
-CUSTOM_RES_H=768
+if [ -z "${CUSTOM_RES_W}" ]; then
+	CUSTOM_RES_W=1024
+fi
+if [ -z "${CUSTOM_RES_H}" ]; then
+	CUSTOM_RES_H=768
+fi
 
+if [ "${CUSTOM_RES_W}" -le 1023 ]; then
+	echo "---Width to low must be a minimal of 1024 pixels, correcting to 1024...---"
+    CUSTOM_RES_W=1024
+fi
+if [ "${CUSTOM_RES_H}" -le 767 ]; then
+	echo "---Height to low must be a minimal of 768 pixels, correcting to 768...---"
+    CUSTOM_RES_H=768
+fi
 echo "---Checking for old logfiles---"
 find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
 find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
@@ -25,9 +37,10 @@ sleep 2
 echo "---Starting Fluxbox---"
 screen -d -m env HOME=/etc /usr/bin/fluxbox
 sleep 2
+echo "---Starting noVNC server---"
+websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem ${NOVNC_PORT} localhost:${RFB_PORT}
+sleep 2
 
 echo "---Starting Chrome---"
-mkdir ${DATA_DIR}
 cd ${DATA_DIR}
-ls
-/usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=${DATA_DIR}  ${EXTRA_PARAMETERS} --disable-dev-shm-usage>/dev/null
+/usr/bin/chromium --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --window-size=${CUSTOM_RES_W},${CUSTOM_RES_H} --no-sandbox --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
