@@ -34,6 +34,8 @@ term_handler() {
 	exit 143;
 }
 
+rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse
+
 trap 'kill ${!}; term_handler' SIGTERM
 su ${USER} -c "/opt/scripts/start-server.sh" &
 killpid="$!"
