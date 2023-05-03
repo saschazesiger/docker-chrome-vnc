@@ -50,6 +50,7 @@ RUN adduser root pulse-access
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1001 ubuntu
 
 
+
 EXPOSE 8080
 
 #Server Start
