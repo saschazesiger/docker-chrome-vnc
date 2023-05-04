@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ARG GUI=xfce
 
-ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubuntu HOME=/home/ubuntu GUI=xfce SCREEN_WIDTH=1600 SCREEN_HEIGHT=900 SCREEN_DEPTH=24 SCREEN_DPI=96 DISPLAY=:99 DISPLAY_NUM=99 FFMPEG_UDP_PORT=10000 WEBSOCKIFY_PORT=6900 VNC_PORT=5900 AUDIO_SERVER=1699 VNC_PASSWD=password PORT=10000
+ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubuntu HOME=/home/ubuntu GUI=xfce SCREEN_WIDTH=1600 SCREEN_HEIGHT=900 SCREEN_DEPTH=24 SCREEN_DPI=96 DISPLAY=:99 DISPLAY_NUM=99 FFMPEG_UDP_PORT=10000 WEBSOCKIFY_PORT=6900 VNC_PORT=5900 AUDIO_SERVER=1699 VNC_PASSWD=password
 
 RUN apt update ; apt install unzip zip -y
 
@@ -39,8 +39,6 @@ RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
 RUN   bash /opt/bin/relax_permission.sh 
 
 RUN  sed -i "s/UI.initSetting('resize', 'off');/UI.initSetting('resize', 'remote');/g" /usr/share/novnc/app/ui.js
-
-COPY /conf/ /etc/.fluxbox/
 
 USER ubuntu
 

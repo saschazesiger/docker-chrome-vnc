@@ -2,7 +2,7 @@
 
 # Relaxing permissions for other non-sudo environments
 
-FOLDERS="/opt/bin/ /var/run/supervisor /var/log/supervisor /etc/nginx"
+FOLDERS="/opt/bin/ /var/run/supervisor /var/log/supervisor /etc/nginx /usr/share/novnc"
 
 mkdir -p $FOLDERS
 

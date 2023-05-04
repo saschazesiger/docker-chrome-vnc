@@ -7,17 +7,6 @@ usermod -g ${GID} ${USER}
 echo "---Setting umask to ${UMASK}---"
 umask ${UMASK}
 
-echo "---Checking for optional scripts---"
-cp -f /opt/custom/user.sh /opt/scripts/start-user.sh > /dev/null 2>&1 ||:
-cp -f /opt/scripts/user.sh /opt/scripts/start-user.sh > /dev/null 2>&1 ||:
-
-if [ -f /opt/scripts/start-user.sh ]; then
-    echo "---Found optional script, executing---"
-    chmod -f +x /opt/scripts/start-user.sh ||:
-    /opt/scripts/start-user.sh || echo "---Optional Script has thrown an Error---"
-else
-    echo "---No optional script found, continuing---"
-fi
 
 echo "---Checking configuration for noVNC---"
 novnccheck
@@ -33,8 +22,6 @@ term_handler() {
 	wait "$killpid" -f 2>/dev/null
 	exit 143;
 }
-
-rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse
 
 trap 'kill ${!}; term_handler' SIGTERM
 su ${USER} -c "/opt/scripts/start-server.sh" &
