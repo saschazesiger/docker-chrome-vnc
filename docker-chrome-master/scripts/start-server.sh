@@ -33,11 +33,8 @@ screen -wipe 2&>/dev/null
 
 echo "---Starting Pulseaudio server---"
 pulseaudio -D -vvvvvvv --exit-idle-time=-1
-
 ffmpeg -f alsa -i pulse -f mpegts -codec:a mp2 -ar 44100 -ac 2 -b:a 128k udp://localhost:10000 &
-
 /opt/scripts/server -audio-port 10000 -port 8081 &
-
 
 echo "---Starting TurboVNC server---"
 vncserver -geometry ${CUSTOM_RES_W}x${CUSTOM_RES_H} -depth ${CUSTOM_DEPTH} :99 -rfbport ${RFB_PORT} -noxstartup ${TURBOVNC_PARAMS} 2>/dev/null

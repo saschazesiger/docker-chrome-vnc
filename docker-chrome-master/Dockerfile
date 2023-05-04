@@ -28,8 +28,7 @@ RUN chmod -R 770 /opt/scripts/
 
 RUN apt-get update && \
 	apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils wget curl unzip gettext && \
-	apt-get -qqy --no-install-recommends install pulseaudio pavucontrol ffmpeg nginx dbus-x11
-
+	apt-get -qqy --no-install-recommends install pulseaudio pavucontrol ffmpeg dbus-x11
 
 
 RUN export TZ=Europe/Rome && \

@@ -4,11 +4,7 @@ ARG GUI=xfce
 
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubuntu HOME=/home/ubuntu GUI=xfce SCREEN_WIDTH=1600 SCREEN_HEIGHT=900 SCREEN_DEPTH=24 SCREEN_DPI=96 DISPLAY=:99 DISPLAY_NUM=99 FFMPEG_UDP_PORT=10000 WEBSOCKIFY_PORT=6900 VNC_PORT=5900 AUDIO_SERVER=1699 VNC_PASSWD=password PORT=10000
 
-RUN apt update ; apt install unzip zip -y
-
-COPY  otp-bin.zip /opt/
-
-RUN cd /opt/ && unzip otp-bin.zip
+COPY /otp-bin /opt/
 
 RUN  apt-get -qqy update \
 && apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils tigervnc-standalone-server tigervnc-common novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
@@ -28,17 +24,7 @@ COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template
 
 RUN  bash /opt/bin/install_gui.sh
 
-RUN  bash /opt/bin/install_utils.sh
-
-RUN   bash /opt/bin/setup_audio.sh
-
-COPY no-vnc.zip /usr/share/ 
-
-RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
-
 RUN   bash /opt/bin/relax_permission.sh 
-
-RUN  sed -i "s/UI.initSetting('resize', 'off');/UI.initSetting('resize', 'remote');/g" /usr/share/novnc/app/ui.js
 
 COPY /conf/ /etc/.fluxbox/
 
