@@ -31,8 +31,10 @@ if [ -f ${DATA_DIR}/.vnc/passwd ]; then
 fi
 screen -wipe 2&>/dev/null
 
-echo "---Starting Audio server---"
-/usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf &
+echo "---Starting Pulseaudio server---"
+pulseaudio --start -D --exit-idle-time=-1
+ffmpeg -f alsa -i pulse -f mpegts -codec:a mp2 udp://localhost:8081 &
+
 
 echo "---Starting TurboVNC server---"
 vncserver -geometry ${CUSTOM_RES_W}x${CUSTOM_RES_H} -depth ${CUSTOM_DEPTH} :99 -rfbport ${RFB_PORT} -noxstartup ${TURBOVNC_PARAMS} 2>/dev/null
