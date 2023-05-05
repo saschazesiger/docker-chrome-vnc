@@ -19,8 +19,6 @@ else
     echo "---No optional script found, continuing---"
 fi
 
-echo "---Checking configuration for noVNC---"
-novnccheck
 
 echo "---Taking ownership of data...---"
 chown -R root:${GID} /opt/scripts
