@@ -3,6 +3,12 @@ Chromium is an open-source browser project that aims to build a safer, faster, a
 
 RESOLUTION: You can also change the resolution from the WebGUI, to do that simply click on 'Show more settings...' (on a resolution change it can occour that the screen is not filled entirely with the Chrome window, simply restart the container and it will be fullscreen again).
 
+## Audio
+docker exec 2302c89b96b3371c4d3d7977f3b91006c34644b569da5a77c94a970e9be5c7fd bash -c "sudo kill \$(pgrep -f '/opt/scripts/server -audio-port 10000 -port 8081')"
+docker exec 2302c89b96b3371c4d3d7977f3b91006c34644b569da5a77c94a970e9be5c7fd bash -c  "/opt/scripts/server -audio-port 10000 -port 8081 &"
+
+
+
 ## Env params
 | Name | Value | Example |
 | --- | --- | --- |
