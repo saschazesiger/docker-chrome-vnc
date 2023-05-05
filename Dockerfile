@@ -3,18 +3,6 @@ FROM ich777/novnc-baseimage
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-chrome"
 
-RUN export TZ=Europe/Rome && \
-	apt-get update && \
-	apt-get -y install --no-install-recommends chromium fonts-takao fonts-arphic-uming libgtk-3-0 && \
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-	echo $TZ > /etc/timezone && \
-	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
-	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
-	locale-gen && \
-	rm -rf /var/lib/apt/lists/* && \
-	sed -i '/    document.title =/c\    document.title = "Chromium - noVNC";' /usr/share/novnc/app/ui.js && \
-	rm /usr/share/novnc/app/images/icons/*
-
 ENV DATA_DIR=/chrome
 ENV CUSTOM_RES_W=1024
 ENV CUSTOM_RES_H=768
@@ -38,17 +26,31 @@ COPY /icons/* /usr/share/novnc/app/images/icons/
 COPY /conf/ /etc/.fluxbox/
 RUN chmod -R 770 /opt/scripts/
 
-COPY  /bin /bin
-RUN  apt-get -qqy update \
-&& apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils websockify wget curl unzip gettext && bash /bin/apt_clean.sh 
-RUN  apt-get -qqy update \
-&& apt-get -qqy --no-install-recommends install pulseaudio pavucontrol ffmpeg nginx && bash /bin/apt_clean.sh 
-RUN   chmod +x /dev/shm
-RUN  mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
-COPY supervisord.conf /etc/supervisor/
-RUN   bash /bin/relax_permission.sh 
+RUN apt-get update && \
+	apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils wget curl unzip gettext && \
+	apt-get -qqy --no-install-recommends install pulseaudio pavucontrol ffmpeg dbus-x11
+
+
+RUN export TZ=Europe/Rome && \
+	apt-get update && \
+	apt-get -y install --no-install-recommends chromium fonts-takao fonts-arphic-uming libgtk-3-0 && \
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+	echo $TZ > /etc/timezone && \
+	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
+	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen && \
+	rm -rf /var/lib/apt/lists/* && \
+	sed -i '/    document.title =/c\    document.title = "Chromium - noVNC";' /usr/share/novnc/app/ui.js && \
+	rm /usr/share/novnc/app/images/icons/*
+
+
+COPY default.pa /etc/pulse/default.pa
+RUN adduser root pulse-access
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1001 ubuntu
+
+
 
 EXPOSE 8080
 
 #Server Start
-ENTRYPOINT ["/opt/scripts/start.sh"]
+CMD ["bash", "/opt/scripts/start.sh"]

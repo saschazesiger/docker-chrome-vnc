@@ -32,20 +32,20 @@ fi
 screen -wipe 2&>/dev/null
 
 echo "---Starting Pulseaudio server---"
-pulseaudio --start -D --exit-idle-time=-1
-ffmpeg -f alsa -i pulse -f mpegts -codec:a mp2 udp://localhost:8081 &
-
+pulseaudio -D -vvvvvvv --exit-idle-time=-1
+ffmpeg -f alsa -i pulse -f mpegts -codec:a mp2 -ar 44100 -ac 2 -b:a 128k udp://localhost:10000 &
+/opt/scripts/server -audio-port 10000 -port 8081 &
 
 echo "---Starting TurboVNC server---"
 vncserver -geometry ${CUSTOM_RES_W}x${CUSTOM_RES_H} -depth ${CUSTOM_DEPTH} :99 -rfbport ${RFB_PORT} -noxstartup ${TURBOVNC_PARAMS} 2>/dev/null
-sleep 2
+
 echo "---Starting Fluxbox---"
 screen -d -m env HOME=/etc /usr/bin/fluxbox
-sleep 2
+
 echo "---Starting noVNC server---"
 websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem ${NOVNC_PORT} localhost:${RFB_PORT}
-sleep 2
+
 
 echo "---Starting Chrome---"
 cd ${DATA_DIR}
-/usr/bin/chromium --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --window-size=${CUSTOM_RES_W},${CUSTOM_RES_H} --no-sandbox --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
+/usr/bin/chromium --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --window-size=${CUSTOM_RES_W},${CUSTOM_RES_H} --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
