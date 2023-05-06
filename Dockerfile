@@ -1,22 +1,18 @@
 FROM debian:bullseye-slim
 
+ENV TURBOVNC_V=3.0.3
+
 LABEL org.opencontainers.image.authors="janis@js0.ch"
 LABEL org.opencontainers.image.source="https://github.com/saschazesiger/"
 
 RUN  echo "deb http://deb.debian.org/debian bullseye contrib non-free" >> /etc/apt/sources.list && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends wget locales procps && \
+	apt-get -y install --no-install-recommends wget locales procps xvfb wmctrl x11vnc fluxbox screen libxcomposite-dev libxcursor1 xauth python3 supervisor dbus-x11 x11-xserver-utils curl unzip gettext pulseaudio pavucontrol ffmpeg fonts-takao fonts-arphic-uming libgtk-3-0 && \
 	touch /etc/locale.gen && \
 	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 	locale-gen && \
 	apt-get -y install --reinstall ca-certificates && \
 	rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-	apt-get -y install --no-install-recommends xvfb wmctrl x11vnc fluxbox screen libxcomposite-dev libxcursor1 xauth python3 && \
-	rm -rf /var/lib/apt/lists/*
-
-ENV TURBOVNC_V=3.0.3
 
 RUN cd /tmp && \
 	wget -O /tmp/turbovnc.deb https://sourceforge.net/projects/turbovnc/files/${TURBOVNC_V}/turbovnc_${TURBOVNC_V}_amd64.deb/download && \
@@ -37,9 +33,9 @@ ENV GID=100
 ENV DATA_PERM=770
 ENV USER="browser"
 
-RUN mkdir $DATA_DIR && \
-	useradd -d $DATA_DIR -s /bin/bash $USER && \
-	chown -R $USER $DATA_DIR && \
+RUN mkdir /browser && \
+	useradd -d /browser -s /bin/bash $USER && \
+	chown -R $USER /browser && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
@@ -47,19 +43,7 @@ COPY /conf/ /etc/.fluxbox/
 RUN chmod -R 770 /opt/scripts/
 
 RUN apt-get update && \
-	apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils wget curl unzip gettext && \
-	apt-get -qqy --no-install-recommends install pulseaudio pavucontrol ffmpeg dbus-x11
-
-
-RUN export TZ=Europe/Rome && \
-	apt-get update && \
-	apt-get -y install --no-install-recommends chromium fonts-takao fonts-arphic-uming libgtk-3-0 && \
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-	echo $TZ > /etc/timezone && \
-	echo "ko_KR.UTF-8 UTF-8" >> /etc/locale.gen && \ 
-	echo "ja_JP.UTF-8 UTF-8" >> /etc/locale.gen && \
-	locale-gen && \
-	rm -rf /var/lib/apt/lists/*
+	apt-get -y install --no-install-recommends chromium
 
 
 COPY default.pa /etc/pulse/default.pa

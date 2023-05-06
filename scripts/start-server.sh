@@ -1,18 +1,15 @@
 #!/bin/bash
 export DISPLAY=:99
-export XAUTHORITY=${DATA_DIR}/.Xauthority
+export XAUTHORITY=/browser/.Xauthority
 
 echo "---Checking for old logfiles---"
-find $DATA_DIR -name "XvfbLog.*" -exec rm -f {} \;
-find $DATA_DIR -name "x11vncLog.*" -exec rm -f {} \;
+find /browser -name "XvfbLog.*" -exec rm -f {} \;
+find /browser -name "x11vncLog.*" -exec rm -f {} \;
 echo "---Checking for old display lock files---"
 rm -rf /tmp/.X99*
 rm -rf /tmp/.X11*
-rm -rf ${DATA_DIR}/.vnc/*.log ${DATA_DIR}/.vnc/*.pid ${DATA_DIR}/Singleton*
-chmod -R ${DATA_PERM} ${DATA_DIR}
-if [ -f ${DATA_DIR}/.vnc/passwd ]; then
-	chmod 600 ${DATA_DIR}/.vnc/passwd
-fi
+rm -rf /browser/.vnc/*.log /browser/.vnc/*.pid /browser/Singleton*
+chmod -R /browser /browser
 screen -wipe 2&>/dev/null
 
 echo "---Starting Pulseaudio server---"
@@ -28,5 +25,5 @@ screen -d -m env HOME=/etc /usr/bin/fluxbox
 
 
 echo "---Starting Chrome---"
-cd ${DATA_DIR}
-/usr/bin/chromium --user-data-dir=${DATA_DIR} --disable-accelerated-video --disable-gpu --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
+cd /browser
+/usr/bin/chromium --user-data-dir=/browser --disable-accelerated-video --disable-gpu --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
