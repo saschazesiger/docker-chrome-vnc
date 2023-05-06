@@ -26,4 +26,4 @@ screen -d -m env HOME=/etc /usr/bin/fluxbox
 
 echo "---Starting Chrome---"
 cd /browser
-/usr/bin/chromium ${URL} --user-data-dir=/browser --disable-accelerated-video --disable-gpu --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub 2>/dev/null
+/usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=/browser --disable-dev-shm-usage>/dev/null
