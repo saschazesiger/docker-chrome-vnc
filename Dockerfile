@@ -13,7 +13,7 @@ RUN  echo "deb http://deb.debian.org/debian bullseye contrib non-free" >> /etc/a
 	rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends xvfb wmctrl x11vnc fluxbox screen libxcomposite-dev libxcursor1 xauth && \
+	apt-get -y install --no-install-recommends xvfb wmctrl x11vnc fluxbox screen libxcomposite-dev libxcursor1 xauth python3 && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV TURBOVNC_V=3.0.3
@@ -29,18 +29,13 @@ RUN cd /tmp && \
 COPY /x11vnc /usr/bin/x11vnc
 RUN chmod 751 /usr/bin/x11vnc
 
-ENV DATA_DIR=/chrome
-ENV CUSTOM_RES_W=1024
-ENV CUSTOM_RES_H=768
-ENV CUSTOM_DEPTH=16
-ENV NOVNC_PORT=8080
-ENV RFB_PORT=5900
+ENV DATA_DIR=/browser
 ENV TURBOVNC_PARAMS="-securitytypes none"
 ENV UMASK=000
 ENV UID=99
 ENV GID=100
 ENV DATA_PERM=770
-ENV USER="chrome"
+ENV USER="browser"
 
 RUN mkdir $DATA_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
