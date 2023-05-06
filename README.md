@@ -1,5 +1,7 @@
-## VNC Chrome based on Debian
 
-(View it on [Docker Hub](https://hub.docker.com/r/j4n11s/chrome-vnc))
+## Audio
+docker exec 2302c89b96b3371c4d3d7977f3b91006c34644b569da5a77c94a970e9be5c7fd bash -c "sudo kill \$(pgrep -f '/opt/scripts/server -audio-port 10000 -port 8081')"
+docker exec 2302c89b96b3371c4d3d7977f3b91006c34644b569da5a77c94a970e9be5c7fd bash -c  "/opt/scripts/server -audio-port 10000 -port 8081 &"
 
-Start it with ```docker run -d -p 5900:5900 j4n11s/chrome-vnc:latest``` and connect with your favorite VNC Viewer
+Start in container: /opt/scripts/server -audio-port 10000 -port 8081 &
+
