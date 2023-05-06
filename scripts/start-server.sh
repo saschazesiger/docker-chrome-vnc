@@ -18,7 +18,7 @@ ffmpeg -f alsa -i pulse -f mpegts -codec:a mp2 -ar 44100 -ac 2 -b:a 128k udp://l
 
 
 echo "---Starting TurboVNC server---"
-vncserver -geometry 1024x768 -depth 16 :99 -rfbport 5900 -noxstartup ${TURBOVNC_PARAMS} 2>/dev/null
+vncserver -geometry 1024x768 -depth 16 :99 -rfbport 5900 -noxstartup -securitytypes none 2>/dev/null
 
 echo "---Starting Fluxbox---"
 screen -d -m env HOME=/etc /usr/bin/fluxbox
@@ -26,4 +26,4 @@ screen -d -m env HOME=/etc /usr/bin/fluxbox
 
 echo "---Starting Chrome---"
 cd /browser
-/usr/bin/chromium --user-data-dir=/browser --disable-accelerated-video --disable-gpu --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub ${EXTRA_PARAMETERS} 2>/dev/null
+/usr/bin/chromium ${URL} --user-data-dir=/browser --disable-accelerated-video --disable-gpu --no-sandbox --disable-dev-shm-usage --test-type --dbus-stub 2>/dev/null
