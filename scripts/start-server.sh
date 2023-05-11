@@ -29,7 +29,7 @@ cd /browser
 
 while true
 do
-  /usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=/browser --disable-dev-shm-usage>/dev/null &
+  /usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=/browser --disable-features=Titlebar --disable-dev-shm-usage>/dev/null &
   while pgrep -x "chrome" > /dev/null
   do
     sleep 1
