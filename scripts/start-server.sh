@@ -27,22 +27,12 @@ screen -d -m env HOME=/etc /usr/bin/fluxbox
 echo "---Starting Chrome---"
 cd /browser
 
-LOCKFILE=/opt/scripts/start-server.lock
-
-if [ -e "${LOCKFILE}" ] && kill -0 `cat "${LOCKFILE}"` ; then
-  echo "Script is already running"
-  exit
-fi
-
-trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
-echo $$ > "${LOCKFILE}"
-
 while true
 do
-  pkill -x google-chrome
-  trickle -d 20000 -u 10000 /usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=/browser --disable-features=Titlebar --disable-dev-shm-usage --new-window ${URL} >/dev/null &
+  trickle -d 20000 /usr/bin/google-chrome ${URL} -no-sandbox --disable-accelerated-video --bwsi --new-window --test-type --disable-accelerated-video --disable-gpu --dbus-stub --no-default-browser-check --no-first-run --bwsi --user-data-dir=/browser --disable-features=Titlebar --disable-dev-shm-usage>/dev/null &
+  sleep 5
   while pgrep -x "chrome" > /dev/null
   do
-    sleep 5
+    sleep 1
   done
 done
